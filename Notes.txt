@@ -1,0 +1,57 @@
+Inception:
+What is CDN?  
+What is crossorigin?
+-------------------------------------------------------------------------------------------
+React JS - 
+Facebook is the creator of React JS
+React is the JS library which helps us to build single page application with easy UI.
+As REACT is a library it can work independently that means it can be applied to small portion of page like headers, footers, some other tags.
+In Frameworks you have to create Whole app and cannot add it to the piece of code.
+React JS was developed to manipulate the DOM using the JS. and react gives us the ways to do it.
+Costliest operations in any application is DOM manipulation and when we do it whole DOM tree changes by udpating the nodes.
+React comes in a picture to optimize this costliest operation by giving some advantages.
+-------------------------------------------------------------------------------------------
+To create an element in React we have to use the syntax as 
+React.createElement() - basically the createElement create/returns the object
+Now, this createElement takes 3 arguments.
+1. element name
+2. object - attributes to the element
+3. content in that element
+It also has props which are children that goes to the HTML element.
+
+render - render method is responsible to convert the createElement object into HTML element that browser understands.
+
+To create a root in react we use the syntax as 
+ReactDOM.createRoot(document.getElementById("root"));
+Ex: 
+const heading = React.createElement("h1", {}, "Hello World from React"); //{} - is a place where you give the attributes to the element.
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading);
+
+If we want to give multiple elements in parent createElement as childs the we have to wrap them into an array.
+const container = React.createElement("div", { id: "container" }, [
+  React.createElement("div", { id: "child1" }, [
+    React.createElement("h1", { id: "heading1" }, "Hello world 1!"),
+    React.createElement(
+      "h2",
+      { id: "subHeading1" },
+      "Welcome to React JS world 1!"
+    ),
+  ]),
+  React.createElement("div", { id: "child2" }, [
+    React.createElement("h1", { id: "heading2" }, "Hello world 2!"),
+    React.createElement(
+      "h2",
+      { id: "subHeading2" },
+      "Welcome to React JS world 2!"
+    ),
+  ]),
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(container);
+
+So, to overcome the pain/difficulty of creating the multiple nested elements using the createElement we use JSX which simplifies our HTML code.
+
+If you add some HTML code under root and then create the new elements using react the HTML code under root. then, the root will be replaced by the elements created by the REACT.
+-------------------------------------------------------------------------------------------
+
