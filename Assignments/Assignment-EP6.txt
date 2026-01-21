@@ -1,0 +1,93 @@
+● What is a Microservice?
+A Microservice is an architectural style where an application is broken into small, independent services, 
+each responsible for a single business capability and communicating via APIs.
+These services includes of BE, UI, Auth, DB, SMS, E-mail
+This is known as seperations of concerns and a single responsibility application.
+React application can be treated as UI micro service.
+
+● What is Monolith architecture?
+A Monolithic architecture is where the entire application is built as one single unit (UI, business logic, and database). 
+are tightly coupled and run as one large process, making it simple to develop and deploy initially but challenging to 
+scale, update, or maintain as it grows complex, often contrasting with microservices. 
+It's like one big block of code, where changing one small part requires recompiling and redeploying the entire application, leading to potential single points of failure. 
+
+● What is the difference between Monolith and Microservice?
+----------------------------------------------------
+|Feature   	    | Monolith	 | Microservice         |
+----------------------------------------------------
+|Deployment     | Single     | Independent          |
+|Scalability	| Entire app | Per service          |
+|Tech stack	    | One	     | Multiple allowed     |
+|Failure impact | Whole app	 | Isolated             |
+|Best for	    | Small apps | Large enterprise apps|
+----------------------------------------------------
+
+● Why do we need a useEffect Hook?
+useEffect is used to handle side effects in React functional components.
+useEffect is a normal JS function and it has two arguments.
+  1. A callback function and
+  2. A dependency array
+This is called after the component renders.
+
+Side effects include:
+ - API calls
+ - Subscriptions
+ - Timers
+ - DOM updates
+Example:
+useEffect(() => {
+  fetchHotels();
+}, []);
+
+● What is Optional Chaining?
+Optional chaining safely accesses nested object properties without causing runtime errors.
+user?.address?.city
+✔ Prevents Cannot read property of undefined
+✔ Improves readability
+
+● What is Shimmer UI?
+Shimmer UI is a loading placeholder UI shown while data is being fetched.
+✔ Improves perceived performance
+✔ Better UX than loaders/spinners
+Example:
+{isLoading ? <Shimmer /> : <RestaurantList />}
+
+● What is the difference between JS expression and JS statement
+Difference between JS Expression and JS Statement
+🔹 Expression
+Produces a value
+Can be used inside JSX
+2 + 2
+isLoggedIn && <Dashboard />
+
+🔹 Statement
+Performs an action
+Cannot be used directly inside JSX
+if (x > 5) { ... }
+for (let i = 0; i < 5; i++) { ... }
+📌 JSX allows expressions, not statements.
+
+● What is Conditional Rendering, explain with a code example
+Conditional Rendering means rendering UI based on a condition.
+{isLoggedIn ? <Dashboard /> : <Login />}
+    
+● What is CORS?
+CORS - Cross Origin Resource Sharing
+A CORS is a mechanism which uses additional HTTP headers to tell the browser. whether, a specific web app can share a resource from other web app.
+Both web apps should have different origin.
+How resource sharing between two applications works?
+Before any call from one application to other application is made. There a preflight option is checked and adds additional HTTPS headers along with the headers.
+Additional http headers - [Access-control-allow-origin/methods:*]
+No, all calls need not be go with preflight call.
+To resolve the error we can set the header from the server. We have browser plugins.
+
+● What is async and await?
+async and await are used for a function to handle the asynchronous operations in synchronous style
+a function name added with async key before it and await is used inside the async function.
+This functions are clear then promises and use try and catch to handle the API calls.
+An async function returns a promise.
+
+● What is the use of `const json = await data.json();` in getRestaurants()
+✔ fetch() returns a Response object
+✔ .json() converts response body into JavaScript object
+✔ await waits until parsing completes

@@ -1,0 +1,34 @@
+● What is the difference between Named Export, Default export and * as export?
+A named export is given before the variable when created.
+Ex: export const CDN_URL="";
+A default export is added at last with default and file name.
+Ex: const TEXT = () =>{
+}
+export default TEXT;
+* as export refers to using wild card to select all files
+
+● What is the importance of config.js file
+A config.js file is a crucial component in software development used to store configuration settings and parameters in a central location, separate from the main application code. 
+This separation enhances maintainability, security, and flexibility across different environments
+
+● What are React Hooks?
+Hooks in React are normal JS functions. Written by Facebook developer.
+To use them we have to import the Hooks. The most important hooks in React are useState and useEffect.
+useState - Helps to create a state variable. This will keep the UI intact with the Data layer.
+When ever state variable updates, React re-render the component.
+
+core concepts: state management, side effects, reusability, simplicity
+
+useState: Lets you add a state variable to your component and provides a function to update it.
+useEffect: Performs side effects after a component renders and can include a cleanup function to prevent memory leaks.
+useContext: Allows a component to subscribe to and read a context value from a parent provider, simplifying data sharing across the component tree.
+useReducer: A more advanced alternative to useState for managing complex state logic, often when the next state depends on the previous one.
+useRef: Returns a mutable ref object that persists across re-renders without causing a component update. It's useful for accessing DOM elements or storing mutable values.
+useMemo: Caches the result of an expensive calculation and only re-computes it when its dependencies change, optimizing performance.
+useCallback: Memoizes a callback function definition, preventing unnecessary re-creation of functions on every render, which is particularly useful for optimizing child components. 
+
+● Why do we need a useState Hook?
+Helps to create a state variable. This will keep the UI intact with the Data layer.
+When ever state variable updates, React re-render the component.
+
+

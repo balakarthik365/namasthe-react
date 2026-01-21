@@ -1,0 +1,29 @@
+● What is JSX?
+JSX is the Javascript extension which has the syntactic sugar similar to HTML.
+This has convention to merge the JS and HTML code to gether
+JSX is a JavaScript syntax extension that allows writing UI in an HTML-like format. 
+It is transpiled by Babel into React.createElement calls, making UI code more readable and declarative.
+
+● Superpowers of JSX
+Using PascalCase to create components
+Using normal variables to create elements
+Gives feature to write the JS code within the elements using {}
+Gives feature to add element inside component or component inside an element
+when function components are created it returns the JSX code.
+JSX prevents XSS by escaping values
+Conditional rendering using ternary / logical operators
+
+● Role of type attribute in script tag? What options can I use there?
+type="module" used to tell the React application that the JS script what we added in index.html file is not the browser script.
+The type attribute defines how the browser should treat the script.
+type="module" tells the browser that the script is an ES Module, allowing the use of import and export, enabling strict mode and deferred loading.
+
+● {TitleComponent} vs - This is a react element. created as an element which is generally a JS variable.
+{<TitleComponent/>} vs - This is a react component. created as a function which is a generally a JS function. This will render the JSX component.
+{<TitleComponent></TitleComponent>} in JSX - This will also render the JSX component.
+
+{TitleComponent} → Just a JS function reference
+
+<TitleComponent /> → Renders the component
+
+<TitleComponent></TitleComponent> → Same output, used when passing children

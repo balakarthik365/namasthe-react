@@ -1,0 +1,117 @@
+● - What is `NPM`?
+NPM is a standard repository for all the packages. It tracks what versions you need to install in the system.
+
+● - What is `Parcel/Webpack`? Why do we need it?
+Parcel/Webpack is the NPM dependecy that gives features like 
+caching, HMR, Local Server, Image Optimization, Bundling, Error Handling, Minification, Compressing and many more
+that can help us to run the application in local, dev and prod ready
+
+● - What is `.parcel-cache`
+It is a cache that will be caching the application features. So, this optimizes and loads the application faster.
+
+● - What is `npx` ?
+npx is a tool that comes with npm that helps you:
+RUN CLI tool without installing it globally. npx build index.html runs the Parcel from local node_modules.
+Avoid global installs. you dont need to do npm install -g parcel
+Always uses the latest or project specific versions mentioned in the package.json.
+
+● - What is difference between `dependencies` vs `devDependencies`
+dependencies in package.json will have the packages which are production ready
+devDependencies in package.json will have the packages that are for dev or local environment
+when we do npm install --production the devDependencies are ignored.
+
+● - What is Tree Shaking?
+Tree Shaking is a build-time optimization that removes unused code (dead code) from the final JavaScript bundle.
+
+● - What is Hot Module Replacement?
+Hot Module Replacement (HMR) is a feature that allows you to update modules in a running application without doing a full page reload.
+
+● - List down your favourite 5 superpowers of Parcel and describe any 3 of them in your
+own words.
+HMR
+Tree Shaking
+Image Optimization - will optimize the images
+Local Server - Setups local server to run the code in local
+HTTPS - Handles the SSL 
+Error Handling - Handles errors with more meaning.
+
+● - What is `.gitignore`? What should we add and not add into it?
+.gitignore is a file which have the files/folders that not need to be moved to repositories.
+We can ignore caching folders, dist and node_modules folders because they can be available in the server where we push the code.
+
+● - What is the difference between `package.json` and `package-lock.json`
+Package.json has all the dependencies that are required for application that needs to be configured and installed. the versions can have ^caret or ~tilde depending on the configurations.
+package.lock.json has all the files with the exact versions that are used to run the application
+
+● - Why should I not modify `package-lock.json`?
+because it has the exact dependencies that are used to build the application and this is created automatically when we install any dependecy or devDependency. It cannot be modified because it can automatically generated whenever we install any dependencies.
+
+● - What is `node_modules` ? Is it a good idea to push that on git?
+node-modules is the container that has all the projects or dependencies that needs to run the application and this can be build based on the configurations given in the package.json
+It is not good idea to push it on git because the file is too large and when we want to deploy it to the server the server will have its own node_modules.
+
+● - What is the `dist` folder?
+dist folder is created when you build the application. this will have majorly 3 files that are index.html, index.js and style.css files.
+It generates the development build of your project that can be hosted to the local server
+
+● - What is `browserlists`
+browserlists is the powerful tool that is configured to your app that can be run on the browsers that are available world wide
+we can also modify this to run on only particular browsers, only in some countries and many more
+
+Read about dif bundlers: vite, webpack, parcel
+webpacks/parcel are powerful tools that gives the powerful feature that optimize and runs the app faster 
+vite 
+
+
+● Read about: ^ - caret and ~ - tilda - 
+caret will use the next minor  versions that are available as latest
+tilde will use the next major version that are available as latest.
+
+● Read about Script types in html (MDN Docs) - 
+type="module" will tell react app that the JS file we added in the index.html is not the browser file. but, the local JS file.
+
+
+// const heading = React.createElement(
+//   "h1",
+//   { id: "heading" },
+//   "Hello World from React!"
+// );
+// console.log(heading);
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(heading);
+
+/*
+*
+<div id="container">
+<div id="child1">
+<h1 id="heading1">Hello world</div>
+<h2 id=subHeading1>Welcome to React JS world</h2>
+</div>
+<div id="child2">
+<h1 id="heading2">Hello world 2</div>
+<h2 id=subHeading2>Welcome to React JS world 2</h2>
+</div>
+</div>
+*
+*/
+
+const container = React.createElement("div", { id: "container" }, [
+  React.createElement("div", { id: "child1" }, [
+    React.createElement("h1", { id: "heading1" }, "Namasthe React!"),
+    React.createElement("h2", { id: "subHeading1" }, "By Akshy Saini"),
+  ]),
+  React.createElement("div", { id: "child2" }, [
+    React.createElement(
+      "h1",
+      { id: "heading2" },
+      "Welcome to the React learning!"
+    ),
+    React.createElement(
+      "h2",
+      { id: "subHeading2" },
+      "Welcome to React JS world 2!"
+    ),
+  ]),
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(container);

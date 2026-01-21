@@ -54,4 +54,208 @@ So, to overcome the pain/difficulty of creating the multiple nested elements usi
 
 If you add some HTML code under root and then create the new elements using react the HTML code under root. then, the root will be replaced by the elements created by the REACT.
 -------------------------------------------------------------------------------------------
+Steps to make our simple application as React application.
+1. initialize the npm.
+2. Install React and React DOM
+3. Install the Parcel
+4. Once installation for the 2 & 3 are done we have the node_modules folder, package.json and package-lock.json files gets created.
+package.json -  It is created when we initialize the npm and has all the dependencies with versions(this has ^ or ~) that are required to create and run react application
+package-lock.json - It has the actual exact versions that are being installed for all the dependencies.
+node_modules - It is a container which has all the packages and projects that are required to run the application.
+5. When we run the npx parcel index.html dist and parcel-cache folders are created
+dist folder - It generates the development build and gives the local server host that can run in the browser. This is like development mode in local
+parcel-cache - It is a file generated to maintain the cache and helps to re-render the applciation faster.
+6. Update the attribute value type="module" to the script so that react understands that the script is not the browser script but the local script.
+7. import the React and ReactDOM in script folder to make the JS file reactive.
+
+NPM - 
+It is everything other than Node Package Manager.
+NPM does not have any full form. but, it manage packages as a package manager.
+NPM is standard repository for all the packages. it keeps track of what versions needs to install in the system.
+
+npm init - created the depependency that are logged in the package.json file.
+once we do npm init, a package.json file is created. 
+This package.json is the configuration for the npm.
+
+npm install -D parcel:
+Parcel - A Beast!!
+There are two types of dependency that we can install. one is the dev dependency and other is the normal dependency.
+A dev dependency means it is required with the development environment.
+Now, parcel is installed and added the dev dependencies in package.json. Also,node_modules and package-lock.json will be created.
+"devDependencies": {
+    "parcel": "^2.16.3" 
+  }
+// ^caret - If we use this in app the dependency will be updated to the latest versions available automatically, 
+// ~tilde - This will install major versions automatically.
+
+package-lock.json: Keeps the track of exact versions that is being installed for all the dependencies.
+
+node_modules: 
+It contains all the code and dependecy files that we fetched from NPM.
+Why do we have so many files other that parcel in the node_modules?
+Transitive dependencies: 
+Parcel as a project has its own dependencies
+Now, those dependencies can have there own dependencies again 
+and this is known as transitive dependencies
+
+if we have package.json and package-lock.json. we can create our node_modules again whenever required. just by doing npm install.
+
+-----------------------------------------------------------------------------
+npm install react
+npm install react-dom
+this will install the React into our project. now update the attribute "type" in app.js so that react will understand that the script is normal script than the browser script 
+this will also help to add imports and use react elements in app.js
+
+dist folder - when you run npx build index.html. it generates the development build of your project and hosted to local server.
+
+browsersList - Powerful tool to configure the app and that can be used and run on the browsers across the world.
+-------------------------------------------------------------------------------------------
+Adding scripts to run the application: Update the scripts in the package.json
+"start": "parcel index.html"
+"build": "parcel build index.html"
+this helps to run our application using the command "npm start". We cannot use same npm build to create prod ready. use "npm run build".
+
+When react was build the core to create elements were using React.createElement and ReactDOM.createRoot. 
+So, Facebook developers has created JSX which is different from React. we can write React code without JSX also.
+The only reason to introduce JSX is to make the coding easy.
+
+JSX - JavaScript extension is a convention to merger JS and HTML together. and it is a syntatic sugar similar to HTML/XML and we can write the JS code in this file.
+It is not HTML in JS.
+  ex: const createHeader = React.createElement(
+        "h1",
+        { id: "heading" },
+        "Namaste React with React Element"
+      );
+      const heading2 = <h1 id="heading">Namaste React with JSX Element</h1>; //this is not pure JS code because JS engine cannot understand JSX. JS understands only the Ecma script language.
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(heading2);
+The base is like the JSX code converted to React.createElement(). Then it creates an JS object and renders as HTML. babel again comes into picture to convert this.
+heading2 - This is how we create elements in JSX. Now, JSX provides the object jsxHeading which need to be rendered to HTML.
+this is not pure JS code because JS engine cannot understand JSX. 
+JS understands only the Ecma script language.
+Parcel helps to transpile the heading2 before it reaches to JS engine. which means the code is converted in a way that react and browsers can understand.
+Parcel it self not transpiles the code. it will sends the code to babel which will transpile the code.
+babel - is a JS compiler. Its job to convert the code to JS code.
+If we want to give attributes it should be in the camelCase.
+If we have multiple elements added we need to wrap them in brackets(). because, babel needs to understand the start and end of elements that are considered as tokens and then converted to React code.
+
+
+React component - Everything is a component in the React application. It is a basic building block of the react applications.
+They are two types:
+1. Class based components: Is an old way to write the code.
+2. Functional components: 
+New/Latest standards used to create react application. 
+uses functions to create components which is just a JS function.
+use first word in Uppercase and pascalCase while creating the function components. because JSX treats the lowercase names as built-in dom tags.
+It returns the JSX element.
+we can run any piece of JS code within the {} within the JSX code.
+A react element is a variable in React JS application 
+element can be used inside the {}, which can be again be used with in the React Element or React Component
+and React componen can be used with <ComponentName /> in other React Element or React Component.
+
+Component composition - Components inside other component is called component composition
+
+cross side scripting - Using the JS code within our application. To steal cookies or sessions.
+JSX takes care to handle this and skips the malicious codes that was being sent as API response or any other data.
+So, basically JSX sanitizes the code before it is rendered.
+-------------------------------------------------------------------------------------------
+props - In React props are passed from component to component. when you want to send dynamic data to components we use props. props is a JS object.
+Config Driven UI - A website is driven by configuration. Controls the UI using config and this config comes from backend.
+cloudinary - It is a CDN where all the image are hosted.
+
+best practices to write code-
+*Destructure the prop value for the object that is passed to component. use optional chaining.
+*Loop the component to load components - reusability(Map, filter and reduce function or for)
+*Loops always returns some JSX
+*Unique key prop - Each time we use a loop we have to send a unique key as a prop.
+  key is reserved. Always add a key prop.
+  why?
+  Let say we have card container and has many restaurant card childrens. Now react optimizes render cycle when it have same level of components.
+  There should be a unique id for each restaurant card. If you dont give id, react will never know which restaurant card is new and re-render all card.
+  If we give a unique Id. React will understands that component with Id at any position like start or end or inbetween
+  when we use a map we need to add a key. and never use index as keys.
+
+Why React?
+It makes the development easy. by providing some super powers.
+
+Best practice is to make seperate files for seperate components.
+
+src- Is like a source code which industries follows.
+
+.js and .jsx - for JS or JSX files. and tsx for TS.
+
+There are two types of export and import - 
+Default:
+export default ComponentName;
+import Component from '/Path';
+Named:
+export const ComponentName;
+import {ComponentName} from '/Path';
+
+Can I use Default and Named export?
+Yes.
+
+React - It is faster for efficient DOM manipulations.because it has a virtual DOM.
+
+Hooks: Hooks in React are normal JS functions. Written by Facebook developer.
+To use them we have to import the Hooks. The most important hooks in React are useState and useEffect.
+useState - Helps to create a state variable. This will keep the UI intact with the Data layer.
+When ever state variable updates, React re-render the component.
+
+Reconciliation - 
+It is also known as React Fiber(React 16 - A new Algorithm was introduced which is known as React Fiber).
+When the UI loads on screen React creates a virtual DOM of the application which is not the actual DOM
+Virtual DOM is representation of actual DOM. It is a Javascript object of React Component.
+
+Diffing Algorithm - 
+Whenever a state variable is updated. React tracks the changes and, 
+This will find the difference between updated Virtual DOM and Actual Virtual DOM. 
+Then it will update the Actual DOM for every render cycle.
+
+
+Monolithic application - A monolithic application is a single, self-contained software unit where all components (UI, business logic, data access) 
+are tightly coupled and run as one large process, making it simple to develop and deploy initially but challenging to 
+scale, update, or maintain as it grows complex, often contrasting with microservices. 
+It's like one big block of code, where changing one small part requires recompiling and redeploying the entire application, leading to potential single points of failure. 
+
+Micro services - These services includes of BE, UI, Auth, DB, SMS, E-mail
+This is known as seperations of concerns and a single responsibility application.
+React application can be treated as UI micro service.
+
+The services are connected by running on their specific ports. All the services are used by a API call.
+
+
+Approaches to fetch Data from BE: 
+1. When app loads then make an API call, fetch the data and render the UI.
+load -> API -> render
+
+2. As soon as page loads we will render the UI. Now, an API call is made and re-render the data
+load -> render -> API -> re-render.
+
+In React, we always use the second approach. And this gives the better UX.
+Re-render cycle for react is very fast. So, we have to not bother about rendering twice.
+
+useEffect:
+useEffect is a normal JS function and it has two arguments.
+  1. A callback function and
+  2. A dependency array
+This is called after the component renders.
+
+
+CORS policy: Browsers block us to call one origin from another origin.
+
+CORS - Cross Origin Resource Sharing
+A CORS is a mechanism which uses additional HTTP headers to tell the browser. whether, a specific web app can share a resource from other web app.
+Both web apps should have different origin.
+How resource sharing between two applications works.
+Before any call from one application to other application is made. There a preflight option is checked and adds additional HTTPS headers along with the headers.
+Additional http headers - [Access-control-allow-origin/methods:*]
+No, all calls need not be go with preflight call.
+To resolve the error we can set the header from the server. We have browser plugins.
+
+shimmer UI: Loads a UI replica as skeleton before actual data loads on the screen.
+
+
+const [btnName, setBtnName] = useState("Login"); - How can a const value is changed. when it is declared as const?
+Because when a value is changed using the useState the component is re-rendered and the value will be the new value to the stack.
 

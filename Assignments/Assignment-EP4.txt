@@ -1,0 +1,67 @@
+● Is JSX mandatory for React?
+Yes, because it gives you the flexability to write HTML like and JSX code to gether. 
+Any how the function component that you build and return the JSX code is the object that is again rendered to HTML using renders.
+It is not mandatory to used JSX we can use React.createElement to create elements. but , it is heptic to handle
+So, when we have feasablity to use JSX we have to use it. but need to follow some instructions.
+
+● Is ES6 mandatory for React?
+Yes, because we use Map, filer, reduces and arrow functions with Let and Const variables and many other features of ES6 in react.
+
+● {TitleComponent} vs {<TitleComponent/>} vs
+{<TitleComponent></TitleComponent>} in JSX
+{TitleComponent} - returns the JS object
+<TitleComponent/> - returns and renders the JSX object
+<TitleComponent></TitleComponent> - Similar to <TitleComponent/> but we can pass child components. basically renders component with childrent content.
+
+● How can I write comments in JSX?
+using /***comments****/
+
+● What is <React.Fragment></React.Fragment> and <></> ?
+Both are fragments that used to group the multiple lines of JSX elements into single fragment.
+So there is no extra DOM wrapper needed to write elements
+The major difference is React.Fragment allows you the key propert while <></> have no keys.
+
+● What is Virtual DOM?
+A Virtual DOM is a lite weight lightweight JavaScript representation and it is similar DOM to Actual DOM that is maintained by REACT. So all the changes are marked on Virtual DOM.
+Later, reconcelliation is done where diffing algorithm made to check the changes from Virtual DOM to Actual Dom and then Actual DOM gets updated.
+
+● What is Reconciliation in React?
+Reconciliation is a technique that differentiates the Virtual and Actual DOM and then reflects the changes to Actual DOM using diffing algorithm
+
+● What is React Fiber?
+React Fiber is React’s internal reconciliation engine introduced in React 16 that enables incremental rendering, prioritization, and interruptible updates.
+It allows React to:
+Pause and resume rendering
+Prioritize urgent updates (like user input)
+Improve responsiveness for large applications
+
+● Why we need keys in React? When do we need keys in React?
+Keys help React uniquely identify elements in a list so it can efficiently update, add, or remove items during reconciliation.
+
+● Can we use index as keys in React?
+Using array index as a key is discouraged when the list is dynamic (add/remove/reorder).
+Why index keys are bad
+Causes incorrect UI updates
+Breaks component state
+Poor performance
+
+● What is props in React? Ways to
+Props (properties) are read-only inputs passed from parent to child components to configure and reuse components.
+Ways to pass props
+1️⃣ Basic props
+<Header title="Dashboard" />
+2️⃣ Children props
+<Card>
+  <p>Content</p>
+</Card>
+3️⃣ Destructuring props
+function Header({ title }) {
+  return <h1>{title}</h1>;
+}
+4️⃣ Callback props
+<Button onClick={handleClick} />
+5️⃣ Spread props
+<Component {...props} />
+
+● What is a Config Driven UI ?
+A Config-Driven UI is a design approach where the UI structure and behavior are controlled by configuration data (JSON or API response) instead of hardcoded logic.
