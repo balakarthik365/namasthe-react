@@ -1,0 +1,82 @@
+LifeCycle: https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+● How do you create Nested Routes react-router-dom cofiguration
+We need Outlet imported and use the children properties in createBrowserRoute({}),
+ex: import {Outlet, createBrowserRouter, RouterProvider} from react-router-dom;
+    const Testing = () =>{
+        <Header />
+        <Outlet />
+    }
+    const router = createBrowserRouter({
+            path: '/',
+            element: <Body />,
+            children:[{
+                path: 'about-us', element: <About />
+            },{
+                path: 'contact-us', element: <Contact />
+            }],
+            errorElement: <Error />
+        })
+    const root = ReactDom.createRoot(document.getElementById('root'));
+    root.render(<RouterProvider router={router} />)
+
+● Read abt createHashRouter, createMemoryRouter from React Router docs.
+Hash router is for static environments, memory router is for testing or non-browser usage.
+    🔹 createHashRouter
+    Uses # in URL
+    Works without server config
+    Used in static hosting
+    Ex: 
+            txt
+            example.com/#/about
+            js 
+            createHashRouter(routes);
+    🔹 createMemoryRouter
+    No URL changes
+    Stored in memory
+    Used for testing & React Native
+    Ex: 
+            txt
+            createMemoryRouter(routes);
+
+● What is the order of life cycle method calls in Class Based Components
+Firstly Life cycle of class based component will have 3 layers with two phases
+1. Mounting layer - This has two phases
+    1. The Render phase which has constructor(), render(), componentDidMount().
+        🔹 First constructor is called - this will handle the state variable. 
+        🔹 next, render method is called - this will again return the JSX
+    2. The mount phase which has
+        🔹 next, componentDidMount() is called - this will handle the API calls
+2. Updating phase - has, componentDidMount(). This will check the state changes and re-render the DOM
+    🔹 next, componentDidUpdate() is called - to tell the component updated
+3. Unmounting Layer - has, componentWillUnmout()
+    🔹next, componentWillUnmout() is called - to umount component when navigated to other component.
+
+● Why do we use componentDidMount?
+To make API calls, subscriptions and DOM operations that will re-render component once data is available,after updating the state variable.
+
+● Why do we use componentWillUnmount? Show with example
+To umount the component when we move to other component. So that the component gets unmounted and memory leaks not happens.
+
+● (Research) Why do we use super(props) in constructor?
+Super(props) - will create a instance for react component so that the props can be accessed by the component.
+
+● (Research) Why can't we have the callback function of useEffect async?
+useEffect callbacks must be synchronous because React uses the return value for cleanup, 
+and async functions return promises instead of cleanup functions. 
+
+
+
+Nested routes → Outlet
+
+Hash router → static hosting
+
+Memory router → testing
+
+componentDidMount → API calls
+
+componentWillUnmount → cleanup
+
+super(props) → initializes this
+
+useEffect async → breaks cleanup contract

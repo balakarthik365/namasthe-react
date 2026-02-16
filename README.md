@@ -19,3 +19,12 @@
 - HTTPS
 - Tree Shaking - remove unused code
 - Different Dev and Prod Bundles
+
+
+#Redux-Toolkit
+ - Install @reduxjs/toolkit & react-redux
+ - Build the store
+ - Connect the store to the app
+ - Slice (CartSlice)
+ - Action Dispatch an action
+ - Selector 

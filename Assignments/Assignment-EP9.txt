@@ -1,0 +1,69 @@
+When and why do we need lazy()?
+We use React.lazy() to dynamically import components, so they are loaded only when required, instead of being part of the initial bundle.
+This enables code splitting, improves initial load time, and optimizes performance for large applications.
+Example:
+const About = React.lazy(() => import("./About"));
+lazy() creates a separate bundle, but Suspense does NOT create the bundle — the bundler does.
+
+2️⃣ What is Suspense?
+Suspense is a React component that lets us handle loading states for components that suspend rendering (like lazy-loaded components or data fetching).
+It does NOT create bundles — it:
+Waits for the async component
+Shows a fallback UI meanwhile
+Example:
+<Suspense fallback={<Shimmer />}>
+  <About />
+</Suspense>
+
+3️⃣ Why do we get this error about startTransition?
+Error:
+"A component suspended while responding to synchronous input…"
+Actual reason (important correction):
+
+This happens when:
+A lazy-loaded component suspends
+During a high-priority synchronous update (like click, input, navigation)
+
+React doesn’t want to block the UI suddenly with a loading state.
+How startTransition fixes it
+import { startTransition } from "react";
+
+startTransition(() => {
+  setShowComponent(true);
+});
+
+
+✔ Marks the update as non-urgent
+✔ Allows React to keep UI responsive
+✔ Suspense can safely show fallback
+
+📌 Key point:
+
+Suspense alone doesn’t fix this — priority control using startTransition does.
+
+4️⃣ Advantages of Code Splitting (lazy + Suspense)
+Correct advantages:
+Smaller initial JS bundle
+Faster First Contentful Paint
+Better performance for large apps
+Loads features only when needed
+
+5️⃣ Disadvantages of Code Splitting
+Real disadvantages (interview-ready):
+Too many small bundles → network overhead
+Lazy loading everywhere can cause UX delays
+Needs proper fallback handling
+
+Slightly more complex debugging
+❌ Your earlier disadvantage was incorrect
+(“If we don’t use lazy, big bundle is created” — that’s not a disadvantage of the pattern)
+
+6️⃣ When and why do we need Suspense?
+We use Suspense whenever a component may suspend rendering, such as:
+React.lazy
+Concurrent data fetching (future / libraries)
+Streaming SSR
+It provides a fallback UI until the async operation completes.
+🔥 Lead-Level One-Liner (Memorize This)
+
+lazy() enables code splitting, Suspense handles loading states, and startTransition controls update priority to keep the UI responsive.

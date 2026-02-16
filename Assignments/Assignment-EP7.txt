@@ -1,0 +1,28 @@
+● What are various ways to add images into our App? Explain with code examples
+Add image statically, dynamically or by using Cross
+EX:
+    <img src="/images/logo.png" alt="logo" />
+    import logo from "./assets/logo.png";
+    <img src={logo} alt="logo" />
+    .card {
+            background-image: url("/images/bg.png");
+        }
+
+● What would happen if we do console.log(useState())?
+Output will be [undefined, function]. because if we dont give any value in useState the default value it takes as undefined.
+and next value anyhow will be a function
+note - Do not log the useState in console.
+
+● How will useEffect behave if we don't add a dependency array ?
+UseEffect will run each time the component rerenders. May cause performance issue of infinite loop.
+
+● What is SPA?
+Single page application is an application that loads one HTML page,
+It dynamically update the page without reloading to load other components.
+
+● What is difference between Client Side Routing and Server Side Routing?
+Client side routing is done for navigation purpose to travel into different component.
+Page do not reload when we navigate to other pages.
+use browser APIs.
+
+Server side routing is like reloading the page everytime. server returns new html

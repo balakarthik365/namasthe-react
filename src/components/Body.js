@@ -1,57 +1,47 @@
-import React, { use } from "react";
-import RestaurantCard from "./RestaurantCard";
-import { restaurantList } from "../utils/mockData";
-import { useState, useEffect } from "react";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { SWIGGY_API } from "../utils/constants";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import useRestaurant from "../utils/useRestaurant";
+import UserContext from "../utils/UserContext";
 const Body = () => {
-  const [list, setList] = useState([]);
-  const [originalList, setOriginalList] = useState([]);
+  const { originalList, showApiError } = useRestaurant();
   const [searchText, setSearchText] = useState("");
   const [top, setTop] = useState(false);
-  const [showApiError, setShowApiError] = useState("");
-  //wheever state variable changes, react triggers a reconciliation cycle(re-renders the component)
-  //useEffect is a normal JS function and it has two arguments. It handles the side-effects and API calls.
-  //1. A callback function and
-  //2. A dependency array
-  //This is called after the component renders.
+  const [resList, setResList] = useState([]);
+  const checkOnline = useOnlineStatus();
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+  // console.log(resList);
   useEffect(() => {
-    // console.log("useEffect Triggered");
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    //fetch - is the browser feature to fetch API and used by JS. it will always returns a promise.
-    try {
-      const data = await fetch(SWIGGY_API);
-      const json = await data.json();
-      console.log(json);
-      const restaurants =
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants;
-      setList(restaurants);
-      setOriginalList(restaurants);
-    } catch (error) {
-      console.log(error.statusMessage);
-      setShowApiError(error.statusMessage);
+    if (originalList?.length) {
+      setResList(originalList);
     }
-  };
+  }, [originalList]);
+  if (checkOnline === false) {
+    return <h1>Oh Oh!! Your offline please check the internet connection.</h1>;
+  }
+  // console.log(originalList.length);
+
+  const { loggedInUser, setUserInfo } = useContext(UserContext);
   return originalList.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body-content">
-      <div className="input-bars">
+    <>
+      <div className="flex items-center justify-between my-2">
         <button
           type="button"
-          className="search-top-btn"
+          className="p-2 bg-blue-600 rounded-md hover:bg-blue-800 text-white font-bold "
           onClick={() => {
             setTop(!top);
             if (!top) {
               const filteredList = originalList.filter(
-                (res) => res.info.avgRating > 4.5,
+                (res) => res.info.avgRating >= 4.5,
               );
-              setList(filteredList);
+              setResList(filteredList);
             } else {
-              setList(originalList);
+              setResList(originalList);
             }
           }}
         >
@@ -60,7 +50,7 @@ const Body = () => {
         <input
           type="text"
           placeholder="Restaurant Name or Cusine..."
-          className="search-input"
+          className="border-2 border-gray-400 w-100 p-2 rounded-md focus-visible:outline-none focus-visible:border-blue-600 hover:border-blue-600"
           value={searchText}
           onChange={(e) => {
             const searchValue = e.target.value.toLowerCase();
@@ -73,23 +63,41 @@ const Body = () => {
                     cuisine.toLowerCase().includes(searchValue),
                   ),
               );
-              setList(typedFilter);
+              setResList(typedFilter);
             } else {
-              setList(originalList);
+              setResList(originalList);
             }
           }}
         />
+        <input
+          type="text"
+          placeholder="Restaurant Name or Cusine..."
+          className="border-2 border-gray-400 w-100 p-2 rounded-md focus-visible:outline-none focus-visible:border-blue-600 hover:border-blue-600"
+          value={loggedInUser}
+          onChange={(e) => setUserInfo(e.target.value)}
+        />
       </div>
-      <div className="restaurant-container">
-        {list.length === 0 && searchText !== "" ? (
-          <h2>No restaurants/food found matching "{searchText}"</h2>
+      <div className="flex items-center justify-items-center gap-4 flex-wrap">
+        {resList.length === 0 && searchText !== "" ? (
+          <h2 className="text-orange-600 text-2xl font-bold">
+            No restaurants/food found matching "{searchText}"
+          </h2>
         ) : (
-          list.map((restaurant) => (
-            <RestaurantCard restData={restaurant} key={restaurant.info.id} />
+          resList.map((restaurant) => (
+            <Link
+              to={"restaurants/" + restaurant.info.id}
+              key={restaurant.info.id}
+            >
+              {restaurant.info.avgRating > 4.5 ? (
+                <RestaurantCardPromoted restData={restaurant} />
+              ) : (
+                <RestaurantCard restData={restaurant} />
+              )}
+            </Link>
           ))
         )}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -259,3 +259,377 @@ shimmer UI: Loads a UI replica as skeleton before actual data loads on the scree
 const [btnName, setBtnName] = useState("Login"); - How can a const value is changed. when it is declared as const?
 Because when a value is changed using the useState the component is re-rendered and the value will be the new value to the stack.
 
+useEffect(()=>{},[]) - It is definitely called after initial render after the component is rendered fully.
+ 1. Without dependecy array [] useEffect is called on every component render.
+ 2. If the dependecy array is empty, useEffect is called on only initial render and just once.
+ 3. If the dependecy array has some value. then, useEffect will called everytime when the dependency changes.
+
+useState() - const [value, setValue] = useState("").
+useState helps us to create the local state variable in the component and  whenever the state of the variable changes component re-renders.
+This should always be used and declared and called inside the functional component only.
+Call the useStates always on the top.
+Never create the state variables in the if, else conditions or in for loops or in functions.
+-----------------------------------------------------------------------------------
+Routing:
+Routing - Allows navigation between different pages based on the URL path.
+There are two types of routing in the web applications.
+1. client side routing
+2. sever side routing
+
+Dynamic routing - 
+Dynamic routing allows us to define routes with dynamic parameters so that the same component can be reused for multiple URLs.
+It is commonly used for:
+Product details
+Hotel details
+User profiles
+Booking IDs
+{ path: "/restaurants/:resId", element: <RestaurantMenu /> }, :resId is dynamic
+
+
+Route - React Router is a client-side routing library that allows navigation between different components based on the URL path, without reloading the page.
+It helps build Single Page Applications (SPA).
+To use routes in React we have to install the Route library using "npm install react-router-dom"
+To create routes we need go to app.js and add them as app.js in root level component for react application.
+  1. Now, create the routing configuration. by importing Browser route as
+      import { createBrowserRouter,RouterProvider } from "react-router-dom";
+  2. create routing configurations in app router. This tells browser router what should happen when and where to route.
+      const appRouter = createBrowserRouter([
+        { path: "/", element: <AppLayout /> }, //path tells what is the path to be used in browser, element tells which component should it show.
+        { path: "/about", element: <About /> },
+      ]);
+  3. Now, we need to provide this configuration using the RouterProvider.
+      root.render(<RouterProvider router={appRouter} />);
+  4. If we pass any random paths and try to access the URL react-router-dom handles this case and throws the error page with details(404).
+     To create our own error page. we can add path with error component.
+     { path: "/", element: <AppLayout />, errorElement: <Error /> }
+  5. react-router-dom also provides a hook named useRouterError this will gives the more information about the error.
+     import { useRouteError } from "react-router";
+     const Error = () => {
+        const err = useRouteError();
+        console.log(err);
+        return (
+          <div>
+            <h1>
+              {err.statusText} - error status: {err.status}
+            </h1>
+            <h2>{err.data}</h2>
+          </div>
+        );
+      };
+  6. We can also create the children routes in React. This will help us to keep header and footer intact, when we want to load mulitple components in the body.
+    {/* if path is / then load <Body /> else load relevent components based on path. this can be achived using the Outlet */}
+    import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+    const AppLayout = () => {
+      return (
+        <div className="appName">
+          <Header />
+          {/* if path is / then load <Body /> else load relevent components based on path. this can be achived using the Outlet */}
+          <Outlet /> // Outlet fills the component based on the childrens path
+        </div>
+      );
+    };
+    const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <AppLayout />,
+      children: [
+        { path: "/", element: <Body /> },
+        { path: "/about-us", element: <About /> },
+        { path: "/contact-us", element: <Contact /> },
+      ],
+      errorElement: <Error />,
+    },
+    ]);
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<RouterProvider router={appRouter} />);
+    *In HTML the filled out components by Outlet loaded when we check the elements in browser*
+  7. use Link provided by react-router-dom which works same as <a>. here "to" attribute add path using to attribute for navigation
+
+
+-----------------------------------------------------------------------------
+Class components:
+Class components - In react class base components are created using the below syntax
+import React from 'react';
+class UserClass extends React.component{ // We use React.component is class that is given by react which tells that this is a class component.
+  render(){ // Render method will return the JSX 
+  return(
+    <div></div>
+  )
+
+  }
+}
+To load class components in web page we need to have the instance for that class.
+
+Props: Props are immutable values that are passed to the components. they are passed normally to class component
+But, to extract props in a class component we need to use the constructor and super method.
+constructor will create instance for the component state and 
+super will create the instance for the react class components. so, that props can be used in the react component.
+ex: constructor(props){
+      super(props)
+    }
+
+useState() in class component: We can create a state variables inside the constructor. using the this.state. we do not have useState in class components.
+ex: this.state = {
+      count: 0,
+      count2: 1,//multiple state variables.
+    };
+
+To update the state - never update state variables directly. You can update using this.setState({count:this.state.count+1})
+
+Life cycle of class based component:
+When class based component is loaded in the UI, Now the instance of the class is created.
+When it component is instantiated or loaded the constructor is called first in the class based components.
+once the constructor is called the the render is called and returns the JSX.
+At last the componentDidMount() Method is called.
+
+If we have a parent class component and the lifecycle will be triggered as
+Parent constructor called first,
+then parent rended is called. Now, we have child component in parent render so, at next
+Child constructor called,
+then child render method is called,
+then child componentDidMount method is called and at last
+the parent componentDidMount method is called.
+
+if we have multiple childs then,
+-Parent constructor called first,
+-then parent rended is called. Now, we have child component in parent render so, at next
+ -Child1 constructor called,
+ -then child1 render method is called,
+ -Child2 constructor called,
+ -then child2 render method is called, // for child1 and 2 React will batch in the render phase so, componentDidMount for both loads next after this rendering.
+  -then child1 componentDidMount method is called //same batching is done for componentDidMount to.
+  -then child2 componentDidMount method is called and at last
+-the parent componentDidMount method is called.
+Why batching is done by react?
+As DOM manipulation is the expensive operation. So react batches the multiple render and commit phases for multiple components to optimize and load it fast to udpate the DOM
+DOM manipulation begins before commit phase.
+
+componentDidMount is another method given in the class component
+componentDidMount(){
+}
+It is used to make API calls and handling the side effects.
+
+Mounting
+React lifecycle has two phases.
+1. Render phase - has constructor, render
+2. Commit phase - has component mounting,updating and unmounting
+
+Updating
+componentDidUpdate(){
+  //this is called at last after componentDidMount
+}
+
+unmounting
+componentWillUnmount(){
+  
+}
+
+------------------------------------------------------------------------------
+Optimization:
+
+1. Modularity - 
+Modularity means breaking down the code into multiple small modules and components. 
+This is more maitainable and more testable.
+Advantages:
+  1. Resuable
+  2. maintainable
+  3. Testable
+Signle responsibility is important while creating the app.
+
+2. Custom hooks: Hooks are basically a JS utility functions. We can also create the custom hooks.
+Why we need custom hook?
+To avoid using the fetch data logic in component where we need to display data.
+Instead create a custom hook handles the fetch api and make the API response available to other components
+1. Add hooks always in util folder for more readablity.
+2. Use the camleCase and "use"(library recommendation) keyword in starting to create custom hook. this will tell react this is custom hook and react understand this.
+   ex: useRestaurantMenu.js
+
+3. Chunking/code-splitting/dynamic-bundling/on-demand-loading/lazy-loading/dynami-import
+    Load the page when only it required to be load on the web UI
+
+-----------------------------------------------------------------------------
+Adding CSS to Application
+CSS / SASS / SCSS
+Styled components
+Bootstrap
+Material UI
+Tailwind CSS
+Chakra UI
+Ant Design
+and many more frameworks and libraries which have prebuilt components that can used for UI
+
+Let us integrate the tailwind CSS to our application.
+Configure tailwind CSS into the project
+1. install tailwind: npm install tailwindcss @tailwindcss/postcss postcss
+   postcss - A tool for transforming CSS with JS. Tailwind uses postcss behind the screens
+2. @import "tailwindcss"; - add this in the index.css
+3. create postcss.config.js file in root level and add
+   export default {
+    plugins: {
+      "@tailwindcss/postcss": {},
+    }
+  }
+4. Add tailwind cli intellisense this will help in providing suggestions for tailwind classes
+
+
+
+-----------------------------------------------------------------------------
+Data is new oil:
+Higher order components - It is function that takes a component and returns a function
+Takes a component as input then add some enhancment to component and returns it back.
+
+Important task of react application is to manage its data.
+It has Two layers:
+1. UI layer - consists of JSX
+2. Data layer - consists of props & states
+
+State lifting - "Lifting state up" in React is the process of moving shared state to the closest common ancestor 
+                of the components that need it. 
+                This pattern ensures a "single source of truth" for the data, 
+                which makes it easier to synchronize, debug, and manage the state across multiple components. 
+Basically lifting the state up defines to ontrol the state in parents than in children to provide some features
+ex - showing the accordian data only which clicked
+
+controlled and un-controlled component
+If child component is controlled by parent component then the child component is called controlled component.
+
+ex: 
+RestaurantMenu.js
+  const [showIndex, setShowIndex] = useState(null); //creating the index value that need to be shared to child component
+          <RestaurantCategory
+            key={category?.card?.card?.title}
+            data={category?.card?.card}
+            showList={index === showIndex ? true : false} // control the child component to show only what clicked.
+            setShowIndex={() => setShowIndex(index)} // show component that clicked
+          />
+import { useState } from "react";
+import ItemsList from "./ItemsList";
+
+const RestaurantCategory = ({ data, showList, setShowIndex }) => {
+  console.log(data);
+  const itemCards = data.itemCards;
+  return (
+    <div className="shadow-sm  m-2 p-1 border-2 border-gray-200 rounded-md cursor-pointer">
+      <div
+        className="text-md flex items-center justify-between font-bold p-2"
+        onClick={() => { 
+          setShowIndex(); //calling the index value that need to be shown
+        }}
+      >
+        <div>{data.title}</div>
+        <div className="transition-all ease-in ">{showList ? "⬆️" : "⬇️"}</div>
+      </div>
+      {showList && (
+        <div className="text-left">
+          {itemCards.map((item) => (
+            <ItemsList key={item.card.info.id} item={item.card.info} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+export default RestaurantCategory;
+
+Props drilling - Passing data from one component to other component from parent to children to grand children is called props drilling
+
+context API - 
+Pre built in React
+Resolves the props drilling issue and data can be accessed globally across any component.
+
+---------------------------------------------------------------------------------
+Redux - 
+A predictable State container for JS app.
+Redux team offers two libraries:
+1. React-Redux
+2. Redux Toolkit
+Redux is a seperate library. We can install this and use it in React application.
+
+Redux is not mandatory application. Redux comes into picture only when we have lot of data to trasfer through out the application.
+Use Redux only when it is required.
+We also have zustand library similar to redux.
+
+Redux store - It is a big JS object and kept in a central global place.
+Slice - It is a small portion of redux store. To store the all the data in smaller parts related to that level of components.
+ex - cart, theme, loggedIn users
+So when we click on add the items to cart it will dispatch the action. this action will call function and this will modify your cart.
+Dispatch - will dispatch the action
+Action - this will call a function
+Selector - subscribing to the store
+
+configureStore - comes from reduxjs/toolkit
+Provider - comes from react-redux
+
+We can wrap the redux provider only for what components we need to use redux.
+
+To create a redux functionality
+1. Install - npm i @reduxjs/toolkit and npm i react-redux
+2. Create a store - Configure the slice in the store by adding the reducer with slice name.
+3. Add the Provider to app with the store.
+4. Create a Slice - This will have name, initialState and reducers. reducers again has actions. 
+                    when we export this we have to export the reducer and actions that are used in reducer.
+                    We will mutating the state here
+5. Read the cart in the components - this can be done by subscribing the store using the selector
+                                     selector is a hook in react, useSelector().
+                                     this will give the access to the store.
+                                     Always subscribe to the small portion of the store
+In slice we have reducers
+In store we have one reducer for whole app.
+In vaniela  Redux(older redux) => Don't mutate the state.
+  To update state create a newState with spreading actual state and return the newState.
+In Redux-Toolkit - We can mutate the state. - This will again use same as older redux behind the scenes. 
+  So, Immer library will help here.
+  Immer takes redux code, compare and gives new code.
+We can also return the items with empty object instead of setting the state.items.length = 0. to clear the items.
+  This basically means either mutate the state or return the empty object as per RTK rule.
+----------------------------------------------------------------------------------------------------------------------
+Testing: There are two types of testing
+1. Manual testing - checking parts of UI manually
+2. Automated testing - Write a code that will test our components
+#Developers Testing 
+1. Unit testing: Testing the react components in isolation. This means testing the particular component.
+2. Integration testing: Testing the integration of component. This means testing components which communicate with each other.
+3. e2e testing: Testing the react application from landing to leaving the page. from login to do some flow to logout.
+
+As a developer we are concerned with #1 Unit testing & #2 Integration testing.
+
+Libraries to do testing.
+1. React testing library - This will use Jest, A delightful JS testing frame work. React testing library uses jest in background.
+   1. Install react testing library: npm install --save-dev @testing-library/react @testing-library/dom
+   2. install jest: jest my-test --notify --config=config.json
+   3. install babel dependencies: npm install --save-dev babel-jest @babel/core @babel/preset-env
+   4. configure the babel: 
+      module.exports = {
+        presets: [
+          ["@babel/preset-env", { targets: { node: "current" } }],
+          ["@babel/preset-react", { runtime: "automatic" }],
+        ],
+      };
+  5. configure parcel configuration to disable default babel transpilation. add .parcelrc file and add code from parcel site.
+     to find .parcelrc. 
+     go to https://parceljs.org/ 
+     -> find JS in left side menu and click 
+     -> find parcel in right side sub menu
+     -> check for babel.config.json and .parcelrc and add configurations.
+  6. Configure the Jest - npx create-jest, before that install npm install --save-dev @babel/preset-react(this will make JSX work in test cases)
+  7. install jsdom library - npm install --save-dev jest-environment-jsdom
+  8. install jest dom testing library - npm install @testing-library/jest-dom
+Now, you can start writing the test cases.
+
+To write the test case, 
+1. create __tests__ - this will be tracked by jest to check the testing files that can be of specs/tests of .ts/.js files.
+__tests__ = dunder tests/dunder methods(__tests__).
+2. create your testing file.
+   ex: sum.test.js
+       This file has the test function with two parameters that is description and a callback function.
+       import { sum } from "../sum";
+       test("Sum function should calculate sum of two numbers", () => {
+        const result = sum(3, 4); //call sum file
+        //Assertion
+        expect(result).toBe(7); // is not mandatory to write. but, always use assertion to check the test.
+       });
+
+Unit testing:
+First render the component in the test function.
+then, check for component elements like inputs, buttons, placeholders, etc...
+Always the rendered component is the react element which is the virtual DOM.

@@ -1,0 +1,85 @@
+● useContext vs Redux.
+Both will resolve the prop drilling scenarios. 
+
+useContext is prebuilt feature in React
+    steps to create useContext
+    1. create a context using createContext
+    2. use the context using the useContext
+    3. use UseContext.Provide to access the value across all components by setting the value attribute. if no value is passed it will be undefined.
+
+Redux is external library which handle the predictable state management
+    steps to create Redux
+    1. Install redux using npm i @reduxjs/toolkit and npm i react-redux
+       The hooks that are used for redux comes from the react-redux package and to create slice and configure the store these comes from @reduxjs/toolkit packages
+    2. Create a slice
+    3. Create a store and configure the slice
+    4. Provide the store in app.js or main.js 
+    5. Now when we use the slice in other components this will dispatch and action and calls the reducer function.
+       This reducer function will update the store and we can subscribe to the store to use the values in the store.
+
+● Advantage of using Redux Toolkit over Redux.
+    1. Easy boiler plate code
+    2. Ease of creating slices and managing the state
+    3. we can mutate the state directly or return an empty object. In traditional redux we have to mutate the state manually
+    4. gives prebuilt slices and configure stores to automate store setup
+
+● Explain Dispatcher.
+Dispatcher will call the action. so that a reducer function will update the store.
+
+● Explain Reducer.
+Reducer is a middle ware which takes multiple reducers from the slice after configuring the store.
+
+● Explain slice.
+Slice is create so that it can be added to the store and the reducers actions can be used to update the initial state value.
+it will have three major components,
+1. name
+2. initialState
+3. reducers
+Note: export the actions and reducer so that the slice is configured and used in other components.
+
+● Explain selector.
+selector is used to get the state value that can be used across the application.
+
+● Explain createSlice and the configuration it takes.
+createSlice is used to create the slice for the RTK integration in the react application.
+it will have three major components,
+1. name
+2. initialState
+3. reducers
+Note: export the actions and reducer so that the slice is configured and used in other components.
+Ex - 
+import { createSlice } from "@reduxjs/toolkit";
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    items: [],
+  },
+  reducers: {
+    addItem: (state, action) => {
+      state.items.push(action.payload);
+    },
+    removeItem: (state,action) => {
+      const index = action.payload;
+      state.items.splice(index,1);
+    },
+    clearCart: (state) => {
+      state.items.length = 0;
+    },
+  },
+});
+
+export const { addItem, removeItem, clearCart } = cartSlice.actions;
+export default cartSlice.reducer;
+
+Now, after creating the slice configure it to the store as below
+Ex - 
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./cartSlice";
+const appStore = configureStore({
+  reducer: {
+    cart: cartReducer,
+  },
+});
+
+export default appStore;
