@@ -8,9 +8,9 @@ export const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const checkOnline = useOnlineStatus();
   const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
+  // console.log(loggedInUser);
   const cartItems = useSelector((state) => state.cart.items);
-  console.log(cartItems);
+  // console.log(cartItems);
   return (
     <div className="flex items-center justify-between border-2 border-blue-600 rounded-b-md shadow-xl sticky top-0 bg-white z-10">
       <div className="px-1 py-2">
@@ -36,7 +36,7 @@ export const Header = () => {
             <Link to="/groceries">Groceries</Link>
           </li>
           <li className="p-2 bg-blue-600 text-white text-md rounded-lg font-semibold">
-            <Link to="/cart"> Cart 🛒 - ({cartItems.length} items)</Link>
+            <Link to="/cart"> Cart - ({cartItems.length} items)</Link>
           </li>
           <button
             type="button"

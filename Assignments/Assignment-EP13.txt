@@ -1,0 +1,18 @@
+● What are different types for testing?
+There are 3 types of testing
+unit testing - Testing the react component in isolation. which means test cases written for one component.
+Integration testing - Testing the integration of components. like writing the testcases to check the component communication using props and states.
+e2e testing - Done by the QA team. this will be the manual and automation testing.
+
+● What is Enzyme?
+Enzyme is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components' output. 
+It was developed by Airbnb and was the industry standard for several years before React Testing Library (RTL) became the dominant choice.
+
+● Enzyme vs React Testing Library
+Enzyme is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components' output. 
+RTL focuses on what the user experiences.
+getByRole(), getByText() – These encourage accessible coding because they force you to think about how a screen reader or a user finds elements
+
+● What is Jest and why do we use it? 
+Jest is the delightful js testing framework. React testing library uses jest in background while testing.
+We have to install and configure the jest before using it using  npx create-jest and also the parcel library for the same.

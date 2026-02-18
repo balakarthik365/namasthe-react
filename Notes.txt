@@ -633,3 +633,30 @@ Unit testing:
 First render the component in the test function.
 then, check for component elements like inputs, buttons, placeholders, etc...
 Always the rendered component is the react element which is the virtual DOM.
+---------------------------------------------------------------------------------------------
+To test the fetch function we need to create a mock fetch function to get data
+ex: 
+global.fetch = jest.fn(()=>{ //global.fetch used to fetch the api, jest.fn writes the function code to fetch
+return Promise.resolve(()=>{ //Always returns a promise
+json:() => {
+ return Promise.resolve(data) // this data will be the mockData
+}
+})
+})
+
+wrap the code within act fn. to work with fetch.
+getByTestId can be used when no other function is available like if input do not have any placeholder or label or anything.
+add data-testid as attribute to the input.
+fireEvent is used to check events and for change function we need to pass object to get the value of element text in input.
+beforeAll(()=>{
+  console.log("All") //this runs first before all it
+})
+beforeEach(()=>{
+  console.log("each") //this runs first before each it
+})
+AfterAll(()=>{
+  console.log("all") //this runs first after all it
+})
+afterEach(()=>{
+  console.log("each") //this runs first after each it
+})

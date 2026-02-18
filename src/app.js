@@ -10,7 +10,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import Shimmer from "./components/Shimmer";
 const Groceries = lazy(() => import("./components/Groceries"));
 import UserContext from "./utils/UserContext";
-import { Provider } from "react-redux"; 
+import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
 const AppLayout = () => {

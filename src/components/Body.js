@@ -26,7 +26,7 @@ const Body = () => {
 
   const { loggedInUser, setUserInfo } = useContext(UserContext);
   return originalList.length === 0 ? (
-    <Shimmer />
+    <Shimmer data-testid="shimmer" />
   ) : (
     <>
       <div className="flex items-center justify-between my-2">
@@ -52,6 +52,7 @@ const Body = () => {
           placeholder="Restaurant Name or Cusine..."
           className="border-2 border-gray-400 w-100 p-2 rounded-md focus-visible:outline-none focus-visible:border-blue-600 hover:border-blue-600"
           value={searchText}
+          data-testid="searchList"
           onChange={(e) => {
             const searchValue = e.target.value.toLowerCase();
             setSearchText(searchValue);

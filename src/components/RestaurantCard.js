@@ -1,12 +1,15 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
 const RestaurantCard = (props) => {
-  const { restData } = props; 
+  const { restData } = props;
   const { name, avgRating, cloudinaryImageId, cuisines, costForTwo } =
     restData?.info;
   const { slaString } = restData?.info?.sla;
   return (
-    <div className="border-2 w-72.5 border-gray-400 rounded-md">
+    <div
+      className="border-2 w-72.5 border-gray-400 rounded-md"
+      data-testid="resCard"
+    >
       <div className="m-2">
         <img
           className="w-100 rounded-md box-border h-[350px] object-cover"

@@ -13,7 +13,10 @@ const ItemsList = ({ item, showAddButton = true }) => {
     dispatch(removeItem(items)); //sends the payload to the cartSlice and used as action.payload
   };
   return (
-    <div className=" border-2 rounded-md m-2 border-gray-200 flex items-center justify-between">
+    <div
+      className=" border-2 rounded-md m-2 border-gray-200 flex items-center justify-between"
+      data-testid="foodItems"
+    >
       <div className="px-4 w-8/12">
         <p className="text-md font-semibold">
           {item.name}({item.category}),
